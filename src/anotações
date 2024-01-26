@@ -1,0 +1,30 @@
+Por ser um projeto com FireBase, necessário instalar uma configuração para o mesmo.
+npm i firebase
+Para instalar o FireBase, depois necessário ir até o site e pegar o script de conexão.
+Dentro da pasta do "MiniBlog/src", criar uma pasta "firebase">>"config.jsx" e colar esse script dentro.
+
+Depois de colar o script, necessário importar o "getFirestore" e marcar o banco:
+import {getFirestore} from "firebase/firebase";
+|
+|
+(final do script)
+|
+|
+const db = getFirestore(app);
+export {db} << está exportando>>
+
+***Instalar o "React-Router-Dom"***
+Já instalado vamos configurar o App.jsx com os: BrowserRouter, Routes e Route, ficando da seguinte maneira:
+<BrowserRouter>
+    <Routes>
+        <Route <<configuração da rota das páginas>>/>
+    </Routes>
+</BrowserRouter>
+
+Já nas páginas será usado o NavLink, porem no caso é usado no component NavBar:
+<NavLink to="/login(exemplo)" className={({isActive})=>(isActive ? styles.active : "")}>
+Login
+</NavLink>
+Nesse caso estou passando que ao clicar no texto "Login" será direcionado para a tela Login.
+Já no caso do className, está sendo passado que quando for clicado/ativado irá fazer a alteração referente ao CSS, caso não seja clicado não irá fazer nada "".
+
