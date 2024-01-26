@@ -4,7 +4,7 @@ Para instalar o FireBase, depois necessário ir até o site e pegar o script de 
 Dentro da pasta do "MiniBlog/src", criar uma pasta "firebase">>"config.jsx" e colar esse script dentro.
 
 Depois de colar o script, necessário importar o "getFirestore" e marcar o banco:
-import {getFirestore} from "firebase/firebase";
+import {getFirestore} from "firebase/firestore";
 |
 |
 (final do script)
@@ -28,3 +28,4 @@ Login
 Nesse caso estou passando que ao clicar no texto "Login" será direcionado para a tela Login.
 Já no caso do className, está sendo passado que quando for clicado/ativado irá fazer a alteração referente ao CSS, caso não seja clicado não irá fazer nada "".
 
+***Fazendo a parte lógica do Register***

@@ -1,14 +1,56 @@
+import { useAuthentication } from "../../hooks/useAuthentication";
 import styles from "./Register.module.css";
 
 import { useState, useEffect } from "react";
 
 export function Register() {
+  // Fazendo a parte que não envolve o back-end
+  const [displayName, setDisplayName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState(""); //referente a error.
+
+  //fazendo linkagem com o useAuthentication
+  // const { createUser, error: authError, loading } = useAuthentication; << se eu chamar desse jeito irá dar um erro no momento do cadastro, a MANEIRA CERTA:
+
+  const { createUser, error: authError, loading } = useAuthentication(); // agora precisa importar no useAthutentication o arquivo "db"
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    setError(""); //está zerando os erros.
+    const user = {
+      //está formando o usuário.
+      displayName,
+      email,
+      password,
+    };
+    //fazendo validação das senhas
+    if (password !== confirmPassword) {
+      setError("As senhas precisam ser iguais!");
+      return;
+    }
+
+    //Está vindo uma resposta de qual usuário está sendo acessado:
+    const res = await createUser(user);
+
+    console.log(user);
+  }
+
+  //irá mapear se o setError mudou:
+  useEffect(() => {
+    if (authError) {
+      setError(authError);
+    }
+  }, [authError]); // com isso, fica verificando se o setError mudou
+
   return (
     <>
-      <div>
+      <div className={styles.register}>
         <h1>Cadastre-se para postar</h1>
         <p>Crie seu usuário aqui...</p>
-        <form>
+        <form onSubmit={handleSubmit}>
           <label>
             <span>Nome:</span>
             <input
@@ -16,6 +58,8 @@ export function Register() {
               name="displayName"
               required
               placeholder="Nome do usuário"
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
             />
           </label>
           <label>
@@ -25,6 +69,8 @@ export function Register() {
               name="email"
               required
               placeholder="E-mail do usuário"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </label>
           <label>
@@ -34,6 +80,8 @@ export function Register() {
               name="password"
               required
               placeholder="Senha do usuário"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </label>
           <label>
@@ -43,9 +91,19 @@ export function Register() {
               name="confirmPassword"
               required
               placeholder="Confirmar senha"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </label>
-          <button className="btn">Cadastrar</button>
+          {/* Botão já carregado para cadastro */}
+          {!loading && <button className="btn">Cadastrar</button>}
+          {/* Botão carregando para cadastrar. */}
+          {loading && (
+            <button className="btn" disabled>
+              Aguarde...
+            </button>
+          )}
+          {error && <p className="error">{error}</p>}
         </form>
       </div>
     </>
