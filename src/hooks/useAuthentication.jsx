@@ -83,7 +83,7 @@ export function useAuthentication() {
       setLoading(false);
     } catch (error) {
       console.log(error.message);
-      console.log(typeof error.message);
+      console.log(typeof error.message); 
 
       let systemErrorMessage;
       if (error.message.includes("auth/invalid-credential")) {
