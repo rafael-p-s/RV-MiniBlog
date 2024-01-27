@@ -26,7 +26,7 @@ export function useAuthentication() {
       return;
     }
   }
-
+  //Register
   const createUser = async (data) => {
     checkIfIsCancelled();
 
@@ -66,6 +66,36 @@ export function useAuthentication() {
       setError(systemErrorMessage);
     }
   };
+  //Logout - sign out
+  function logout() {
+    checkIfIsCancelled();
+    signOut(auth);
+  }
+
+  //login - sign in
+  async function login(data) {
+    checkIfIsCancelled(); // verificação de memoria
+    setLoading(true);
+    setError(null);
+    console.log(data);
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+      setLoading(false);
+    } catch (error) {
+      console.log(error.message);
+      console.log(typeof error.message);
+
+      let systemErrorMessage;
+      if (error.message.includes("auth/invalid-credential")) {
+        systemErrorMessage = "E-mail ou senha incorretos, verificar.";
+      } else {
+        systemErrorMessage = "Ocorreu um erro, por favor tente mais tarde.";
+      }
+      console.error("Error Firebase>>>", error.message);
+      setError(systemErrorMessage);
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
     return () => setCancelled(true);
@@ -76,5 +106,7 @@ export function useAuthentication() {
     createUser,
     error,
     loading,
+    logout,
+    login,
   };
 }

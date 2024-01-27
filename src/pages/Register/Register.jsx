@@ -1,7 +1,7 @@
-import { useAuthentication } from "../../hooks/useAuthentication";
 import styles from "./Register.module.css";
 
 import { useState, useEffect } from "react";
+import { useAuthentication } from "../../hooks/useAuthentication";
 
 export function Register() {
   // Fazendo a parte que não envolve o back-end
