@@ -12,6 +12,9 @@ export function CreatePost() {
   const [tags, setTags] = useState([]);
   const [formError, setFormError] = useState("");
 
+  //navigate:
+  const navigate = useNavigate();
+
   //pegando usuário:
   const { user } = useAuthValue();
 
@@ -22,21 +25,37 @@ export function CreatePost() {
     setFormError(""); //zerando erros do formulário
 
     //validate image URL
+    try {
+      new URL(image);
+    } catch (error) {
+      setFormError("A imagem precisa ser uma URL.");
+      return;
+    }
 
     //criar o array de tags
+    const tagsArray = tags.split(",").map((tag) => tag.trim().toLowerCase()); //"split" vai ajudar a separar as tags como um array. Sendo passado para todos os valores serem minusculos.
 
     //checar todos os valores
+
+    if (!title || !image || !tags || !body) {
+      //Vai verificar se todos os campos estão preenchidos, caso não:
+      setFormError("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    if (formError) return;
 
     insertDocument({
       title,
       image,
       body,
-      tags,
+      tagsArray,
       uid: user.uid, //está chando e acessando a propriedade uid
       createdBY: user.displayName,
     });
 
     //redirect to home page
+    navigate("/"); //irá enviar o usuário para a home, depois de postar algo
   }
 
   return (
@@ -96,6 +115,7 @@ export function CreatePost() {
           </button>
         )}
         {response.error && <p className="error">{response.error}</p>}
+        {formError && <p className="error">{formError}</p>}
       </form>
     </div>
   );
