@@ -2,14 +2,23 @@ import styles from "./Home.module.css";
 
 //hooks
 import { useNavigate, Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useFetchDocuments } from "../../hooks/useFetchDocuments";
+
 export function Home() {
   const [query, setQuery] = useState("");
-  const [posts] = useState([]);
+  const { documents: posts, loading } = useFetchDocuments("posts"); //fazendo extrassão do outro arquivo
 
   function handleSubmit(e) {
     e.preventDefault();
   }
+
+  useEffect(() => {
+    console.log(posts);
+  }, []);
+  useEffect(() => {
+    console.log("Posts:", posts);
+  }, [posts]);
 
   return (
     <div className={styles.home}>
@@ -25,7 +34,10 @@ export function Home() {
         </button>
       </form>
       <div>
-        <h1>Posts...</h1>
+        {loading && <p>Carregando...</p>}
+        {posts &&
+          posts.length > 0 &&
+          posts.map((post) => <h3 key={post.id}>{post.title}</h3>)}
         {posts && posts.length === 0 && (
           <div className={styles.noposts}>
             <p>Não foram encontrados posts</p>

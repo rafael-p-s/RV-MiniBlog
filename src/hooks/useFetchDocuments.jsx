@@ -24,8 +24,7 @@ export function useFetchDocuments(docCollection, search = null, uid = null) {
       const collectionRef = await collection(db, docCollection);
 
       try {
-        let callQuery;
-        callQuery = await query(collectionRef, orderBy("createAt", "desc")); //está chamando por ordem de validade de criação, mais novos primeiro.
+       let callQuery = await query(collectionRef, orderBy("createdAt", "asc")); //está chamando por ordem de validade de criação, mais novos primeiro.
 
         //mapear os dados
         await onSnapshot(callQuery, (querySnapshot) => {
@@ -46,8 +45,8 @@ export function useFetchDocuments(docCollection, search = null, uid = null) {
 
         setLoading(false);
       }
-      loadData();
-    }
+    };
+    loadData();
   }, [docCollection, search, uid, cancelled]);
 
   useEffect(() => {
@@ -55,4 +54,6 @@ export function useFetchDocuments(docCollection, search = null, uid = null) {
   }, []);
 
   return { documents, loading, error };
+  
 }
+

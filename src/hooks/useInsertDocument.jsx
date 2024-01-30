@@ -78,5 +78,4 @@ export function useInsertDocument(docCollection) {
   }, []);
 
   return { insertDocument, response }; //recebe a confirmação se o document realmente foi gravado no bd.
-  return <></>;
 }
