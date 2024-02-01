@@ -24,10 +24,21 @@ export function useFetchDocuments(docCollection, search = null, uid = null) {
       const collectionRef = await collection(db, docCollection);
 
       try {
-       let callQuery = await query(collectionRef, orderBy("createdAt", "asc")); //está chamando por ordem de validade de criação, mais novos primeiro.
+        //  let q = await query(collectionRef, orderBy("createdAt", "asc")); //está chamando por ordem de validade de criação, mais novos primeiro.
+        let q;
+        //vamos receber o search/busca, baseado nas tags do post.
+        if (search) {
+          q = await query(
+            collectionRef,
+            where("tags", "array-contains", search)
+          ),
+            orderBy("createdAt", "desc");
+        } else {
+          q = await query(collectionRef, orderBy("createdAt", "desc"));
+        }
 
         //mapear os dados
-        await onSnapshot(callQuery, (querySnapshot) => {
+        await onSnapshot(q, (querySnapshot) => {
           //executar uma função para vir com os docs do FireBase
           setDocuments(
             //fazendo um mapeamento, para acessar os docs para verificar os dados que veio
@@ -45,7 +56,7 @@ export function useFetchDocuments(docCollection, search = null, uid = null) {
 
         setLoading(false);
       }
-    };
+    }
     loadData();
   }, [docCollection, search, uid, cancelled]);
 
@@ -54,6 +65,4 @@ export function useFetchDocuments(docCollection, search = null, uid = null) {
   }, []);
 
   return { documents, loading, error };
-  
 }
-

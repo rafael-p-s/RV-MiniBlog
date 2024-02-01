@@ -16,8 +16,9 @@ import { NavBar } from "./components/navbar/NavBar";
 import { Footer } from "./components/footer/Footer";
 import { Login } from "./pages/Login/Login";
 import { Register } from "./pages/Register/Register";
-import {CreatePost} from "./pages/createPost/CreatePost.jsx"
+import { CreatePost } from "./pages/createPost/CreatePost.jsx";
 import { DashBoard } from "./pages/dashBoard/DashBoard.jsx";
+import { Search } from "./pages/Search/Search.jsx";
 
 function App() {
   const [user, setUser] = useState(undefined); //undefined, não tem ninguém identificado
@@ -48,6 +49,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/search" element={<Search />} />
               {/* Fazendo verificação se está logado ou não. */}
               <Route
                 path="/login"
@@ -60,7 +62,7 @@ function App() {
               <Route
                 path="/posts/create"
                 // Nesse caso, se o usuário estiver logado vai para pg, se ñ vai para a tela de Login
-                element={user ? <CreatePost/> : <Navigate to="/login" />}
+                element={user ? <CreatePost /> : <Navigate to="/login" />}
               />
               <Route
                 path="/dashboard"

@@ -49,7 +49,7 @@ export function CreatePost() {
       title,
       image,
       body,
-      tag: tagsArray,
+      tags: tagsArray,
       uid: user.uid, //está chando e acessando a propriedade uid
       createdBY: user.displayName,
     });

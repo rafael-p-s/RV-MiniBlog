@@ -10,8 +10,14 @@ export function Home() {
   const [query, setQuery] = useState("");
   const { documents: posts, loading } = useFetchDocuments("posts"); //fazendo extrassão do outro arquivo
 
+  const navigate = useNavigate();
+
   function handleSubmit(e) {
     e.preventDefault();
+
+    if (query) {
+      return navigate(`/search?q=${query}`);
+    }
   }
 
   useEffect(() => {
@@ -26,13 +32,12 @@ export function Home() {
       <h1>Posts mais recentes:</h1>
       <hr />
       <form onSubmit={handleSubmit} className={styles.search_form}>
-        <input type="text" placeholder="Ou busque por tags..." />
-        <button
-          className="btn btn-dark"
+        <input
+          type="text"
+          placeholder="Ou busque por tags..."
           onChange={(e) => setQuery(e.target.value)}
-        >
-          Pesquisar
-        </button>
+        />
+        <button className="btn btn-dark">Pesquisar</button>
       </form>
       <div>
         {loading && <p>Carregando...</p>}
