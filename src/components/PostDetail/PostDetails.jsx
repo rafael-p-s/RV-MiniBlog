@@ -17,7 +17,7 @@ export function PostDetail({ post }) {
             </p>
           ))}
         </div>
-        <Link tp={`/posts/${post.id}`} className="btn btn-outline">
+        <Link to={`/posts/${post.id}`} className="btn btn-outline">
           Ler
         </Link>
       </div>

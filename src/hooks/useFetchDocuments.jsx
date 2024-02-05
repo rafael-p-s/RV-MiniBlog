@@ -28,10 +28,10 @@ export function useFetchDocuments(docCollection, search = null, uid = null) {
         let q;
         //vamos receber o search/busca, baseado nas tags do post.
         if (search) {
-          q = await query(
+          (q = await query(
             collectionRef,
             where("tagsArray", "array-contains", search)
-          ),
+          )),
             orderBy("createdAt", "desc");
         } else {
           q = await query(collectionRef, orderBy("createdAt", "desc"));
@@ -58,7 +58,7 @@ export function useFetchDocuments(docCollection, search = null, uid = null) {
       }
     }
     loadData();
-  }, [docCollection, search, uid, cancelled]);
+  }, [docCollection, documents, search, uid, cancelled]);
 
   useEffect(() => {
     return () => setCancelled(true);
