@@ -15,7 +15,6 @@
   font-weight: bold;
 }
 
-.post_container img{
-    width: 50%;
-    height: 50%;
+.post_container img {
+  max-width: 300px;
 }

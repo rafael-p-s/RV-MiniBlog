@@ -6,9 +6,8 @@ import {
   orderBy,
   onSnapshot,
   where,
-} from "firebase/firestore"; //referente aos comandos do banco de dados
+} from "firebase/firestore";
 
-//Passando os parametros para fazer a conexão, a busca das tags e validação de usuário.
 export function useFetchDocuments(docCollection, search = null, uid = null) {
   const [documents, setDocuments] = useState(null);
   const [error, setError] = useState(null);
@@ -24,20 +23,18 @@ export function useFetchDocuments(docCollection, search = null, uid = null) {
       const collectionRef = await collection(db, docCollection);
 
       try {
-        //  let q = await query(collectionRef, orderBy("createdAt", "asc")); //está chamando por ordem de validade de criação, mais novos primeiro.
         let q;
-        //vamos receber o search/busca, baseado nas tags do post.
         if (search) {
-          (q = await query(
+          (q = query(
             collectionRef,
-            where("tagsArray", "array-contains", search)
+            where("tags", "array-contains", search)
           )),
-            orderBy("createdAt", "desc");
+            orderBy("createAt", "desc");
         } else if (uid) {
-          (q = await query(collectionRef, where("uid", "==", uid))),
-            orderBy("createdAt", "desc");
+          (q = query(collectionRef, where("uid", "==", uid))),
+            orderBy("createAt", "desc");
         } else {
-          q = await query(collectionRef, orderBy("createdAt", "desc"));
+          q = query(collectionRef, orderBy("createAt", "desc"));
         }
 
         //mapear os dados

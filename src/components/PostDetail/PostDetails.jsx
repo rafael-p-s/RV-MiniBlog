@@ -10,12 +10,13 @@ export function PostDetail({ post }) {
         <h2>{post.title}</h2>
         <p className={styles.createdBy}>{post.createBy}</p>
         <div className={styles.tags}>
-          {post.tagsArray.map((tag) => (
-            <p key={tag}>
-              <span>#</span>
-              {tag}
-            </p>
-          ))}
+          {Array.isArray(post.tags) &&
+            post.tags.map((tag) => {
+              <p>
+                <span>#</span>
+                {tag}
+              </p>;
+            })}
         </div>
         <Link to={`/posts/${post.id}`} className="btn btn-outline">
           Ler

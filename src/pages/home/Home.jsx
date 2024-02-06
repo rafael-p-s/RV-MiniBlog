@@ -45,7 +45,7 @@ export function Home() {
           posts.length > 0 &&
           posts.map((post) => <h3 key={post.id}>{post.title}</h3>)} */}
         {posts?.length
-          ? posts.map((post) => <PostDetail key={post.id} post={post} />)
+          ? posts.map((posts) => <PostDetail key={posts.id} post={posts} />)
           : ""}
         {posts && posts.length === 0 && (
           <div className={styles.noposts}>

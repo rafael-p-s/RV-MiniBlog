@@ -33,23 +33,21 @@ export function CreatePost() {
     }
 
     //criar o array de tags
-    const tagsArray = tags.split(",").map((tag) => tag.trim().toLowerCase()); //"split" vai ajudar a separar as tags como um array. Sendo passado para todos os valores serem minusculos.
+    const tagList = tags.split(",").map((tag) => tag.trim().toLowerCase()); //"split" vai ajudar a separar as tags como um array. Sendo passado para todos os valores serem minusculos.
 
     //checar todos os valores
 
-    if (!title || !image || !tags || !body) {
+    if (!title || !image || !tagList || !body) {
       //Vai verificar se todos os campos estão preenchidos, caso não:
       setFormError("Por favor, preencha todos os campos.");
       return;
     }
 
-    if (formError) return;
-
     insertDocument({
       title,
       image,
       body,
-      tags: tagsArray,
+      tags: tagList,
       uid: user.uid, //está chando e acessando a propriedade uid
       createdBY: user.displayName,
     });

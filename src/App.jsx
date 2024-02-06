@@ -20,7 +20,7 @@ import { CreatePost } from "./pages/createPost/CreatePost.jsx";
 import { DashBoard } from "./pages/dashBoard/DashBoard.jsx";
 import { Search } from "./pages/Search/Search.jsx";
 import { Post } from "./pages/Post/Post.jsx";
-
+import { EditPost } from "./pages/EditPost/EditPost.jsx";
 
 function App() {
   const [user, setUser] = useState(undefined); //undefined, não tem ninguém identificado
@@ -52,7 +52,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/search" element={<Search />} />
-              <Route path="/posts/:id" element={<Post/>} />             
+              <Route path="/posts/:id" element={<Post />} />
               {/* Fazendo verificação se está logado ou não. */}
               <Route
                 path="/login"
@@ -61,6 +61,10 @@ function App() {
               <Route
                 path="/register"
                 element={!user ? <Register /> : <Navigate to="/register" />}
+              />
+              <Route
+                path="/posts/edit/:id"
+                element={user ? <EditPost /> : <Navigate to="/login" />}
               />
               <Route
                 path="/posts/create"
