@@ -64,7 +64,6 @@ function App() {
               />
               <Route
                 path="/posts/create"
-                // Nesse caso, se o usuário estiver logado vai para pg, se ñ vai para a tela de Login
                 element={user ? <CreatePost /> : <Navigate to="/login" />}
               />
               <Route
