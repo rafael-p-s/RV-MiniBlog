@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAuthValue } from "../../context/AuthContext";
 import { useInsertDocument } from "../../hooks/useInsertDocument";
 import { useFetchDocument } from "../../hooks/useFetchDocument";
+import { useUpdateDocument } from "../../hooks/useUpdateDocument";
 
 export function EditPost() {
   const { id } = useParams();
@@ -21,9 +22,7 @@ export function EditPost() {
       setTitle(post.title);
       setBody(post.body);
       setImage(post.image);
-
-      const textTags = post.tags.join(", ");
-      setTags(textTags);
+      setTags(post.tags); // define as tags como um array diretamente
     }
   }, [post]);
 
@@ -33,7 +32,7 @@ export function EditPost() {
   //pegando usuário:
   const { user } = useAuthValue();
 
-  const { insertDocument, response } = useInsertDocument("posts"); //está desestruturando a função.
+  const { updateDocument, response } = useUpdateDocument("posts"); //está desestruturando a função.
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -48,8 +47,7 @@ export function EditPost() {
     }
 
     //criar o array de tags
-    const tags = tags.split(",").map((tag) => tag.trim().toLowerCase()); //"split" vai ajudar a separar as tags como um array. Sendo passado para todos os valores serem minusculos.
-
+    const tagsArray = tags.split(",").map((tag) => tag.trim().toLowerCase()); //"split" vai ajudar a separar as tags como um array. Sendo passado para todos os valores serem minusculos.
     //checar todos os valores
 
     if (!title || !image || !tags || !body) {
@@ -60,17 +58,19 @@ export function EditPost() {
 
     if (formError) return;
 
-    // insertDocument({
-    //   title,
-    //   image,
-    //   body,
-    //   tags,
-    //   uid: user.uid, //está chando e acessando a propriedade uid
-    //   createdBY: user.displayName,
-    // });
+    const data = {
+      title,
+      image,
+      body,
+      tags: tagsArray,
+      uid: user.uid, //está chando e acessando a propriedade uid
+      createdBY: user.displayName,
+    };
+
+    updateDocument(id, data);
 
     //redirect to home page
-    navigate("/"); //irá enviar o usuário para a home, depois de postar algo
+    navigate("/dashboard"); //irá enviar o usuário para a home, depois de postar algo
   }
   if (loading) {
     return <p>Carregando...</p>;
