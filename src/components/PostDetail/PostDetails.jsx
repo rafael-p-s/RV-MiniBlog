@@ -12,7 +12,7 @@ export function PostDetail({ post }) {
         <div className={styles.tags}>
           {Array.isArray(post.tags) &&
             post.tags.map((tag) => {
-              <p>
+              <p key={tag}>
                 <span>#</span>
                 {tag}
               </p>;

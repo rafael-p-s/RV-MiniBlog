@@ -4,19 +4,17 @@
   align-items: center;
   justify-content: center;
 }
-
-.search_from {
-  max-width: 100%;
+.search_form {
+  max-width: 300%;
   width: 60%;
   display: flex;
   justify-content: center;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 .search_from input {
   margin-right: 10px;
   width: 50%;
 }
-
 .noposts {
   text-align: center;
 }
